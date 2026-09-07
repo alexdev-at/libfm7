@@ -1,0 +1,8 @@
+build/
+*.o
+*.bin
+*.s19
+*.d77
+*.t77
+.DS_Store
+
