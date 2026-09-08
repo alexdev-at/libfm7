@@ -24,7 +24,6 @@ _start:
 
 _exit:
     lds _os_stack
-
     rts
 
 .section .bss
