@@ -11,9 +11,10 @@
 .equ USER_STACK_TOP, 0x1FFF
 
 _start:
-	orcc #0x50
+    orcc #0x50
 
-    sts _os_stack
+    sts _os_s
+    stu _os_u
 
     lds #HARDWARE_STACK_TOP
     ldu #USER_STACK_TOP
@@ -23,9 +24,15 @@ _start:
     jsr main
 
 _exit:
-    lds _os_stack
+    ldu _os_u
+    lds _os_s
+
     rts
 
 .section .bss
-_os_stack:
+
+_os_s:
     .space 2
+_os_u:
+    .space 2
+    

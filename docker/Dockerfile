@@ -48,7 +48,19 @@ ENV VBCC="/opt/vbcc"
 RUN mkdir -p /opt/vbcc/config && \
     printf -- "-cc=vbcchc12 -cpu=6809 -quiet %%s -o= %%s %%O -I/opt/libfm7/include\n-as=vasm6809_std -quiet -Fvobj %%s -o %%s\n-rm=rm -f %%s\n-ld=vlink -b rawbin -T /opt/libfm7/ldscripts/libfm7_main.ld /opt/libfm7/src/main_cpu/crt0.o %%s %%s -o %%s\n" > /opt/vbcc/config/libfm7
 
+COPY include /opt/libfm7/include
+COPY ldscripts /opt/libfm7/ldscripts
+COPY src /opt/libfm7/src
+COPY templates /opt/libfm7/templates
+COPY Makefile /opt/libfm7/Makefile
+COPY docker/entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh && \
+    make -C /opt/libfm7
+
 WORKDIR /app
 
-CMD ["/bin/sh"]
+ENTRYPOINT ["/entrypoint.sh"]
+
+CMD ["make"]
 

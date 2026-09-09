@@ -1,0 +1,16 @@
+{
+  "name": "libfm7",
+  "version": "0.1.0",
+  "description": "CLI tool for libfm7 SDK",
+  "bin": {
+    "libfm7": "./cli.js"
+  },
+  "keywords": [
+    "fm7",
+    "fujitsu",
+    "sdk"
+  ],
+  "author": "Alexander Kiefer",
+  "license": "LGPL-2.1-only"
+}
+
