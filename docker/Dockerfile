@@ -46,7 +46,7 @@ ENV PATH="/opt/vbcc/bin:${PATH}"
 ENV VBCC="/opt/vbcc"
 
 RUN mkdir -p /opt/vbcc/config && \
-    printf -- "-cc=vbcchc12 -cpu=6809 -quiet %%s -o= %%s %%O -I/opt/libfm7/include\n-as=vasm6809_std -quiet -Fvobj %%s -o %%s\n-rm=rm -f %%s\n-ld=vlink -b rawbin -T /opt/libfm7/ldscripts/libfm7_main.ld /opt/libfm7/src/main_cpu/crt0.o %%s %%s -o %%s\n" > /opt/vbcc/config/libfm7
+    printf -- "-cc=vbcchc12 -cpu=6809 -quiet %%s -o= %%s %%s\n-as=vasm6809_std -quiet -Fvobj %%s -o %%s\n-rm=rm -f %%s\n-ld=vlink -b rawbin -T /opt/libfm7/ldscripts/libfm7_main.ld /opt/libfm7/src/main_cpu/crt0.o %%s %%s -L/opt/libfm7/lib -lfm7 -o %%s\n-I/opt/libfm7/include\n" > /opt/vbcc/config/libfm7
 
 COPY include /opt/libfm7/include
 COPY ldscripts /opt/libfm7/ldscripts

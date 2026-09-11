@@ -2,9 +2,12 @@
 
 libfm7 is a modern C SDK for the Fujitsu FM-7 series microcomputers.
 
+> [!WARNING]
+> The SDK is in its earliest stages and most of the library is incomplete. Please be patient and check regularly for updates
+
 ## Prerequisites
 
-- [Docker Desktop](https://www.docker.com/) (must be running in the background)
+- [Docker Desktop](https://www.docker.com/)
 - [Node.js](https://nodejs.org/) (includes `npm`)
 - [XM7 Emulator](https://retropc.net/ryu/xm7/xm7.shtml) (or any FM-7 compatible emulator)
 
@@ -50,3 +53,12 @@ To clean build artifacts:
 ```bash
 libfm7 make clean
 ```
+
+### 3. Run in Emulator
+
+1. Open your FM-7 emulator (e.g., XM7) and insert `build/out.d77` into Drive 0.
+2. In F-BASIC, load and run the program:
+```basic
+LOADM "OUT",,R
+```
+*(Or load and execute separately with `LOADM "OUT"` followed by `EXEC`.)*

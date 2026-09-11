@@ -1,7 +1,7 @@
 {
   "name": "libfm7",
   "version": "0.1.0",
-  "description": "CLI tool for libfm7 SDK",
+  "description": "CLI tool for the libfm7 SDK",
   "bin": {
     "libfm7": "./cli.js"
   },
