@@ -1,9 +1,22 @@
 # libfm7
 
-libfm7 is a modern C SDK for the Fujitsu FM-7 series microcomputers.
+libfm7 is a modern C SDK for the Fujitsu FM series microcomputers.
 
 > [!WARNING]
 > The SDK is in its earliest stages and most of the library is incomplete. Please be patient and check regularly for updates
+
+## Hardware Compatibility
+
+- [ ] FM-8
+- [x] FM-7
+- [x] FM-new7
+- [ ] FM-77
+- [ ] FM-77AV
+- [ ] FM-77AV20
+- [ ] FM-77AV40
+- [ ] FM-77AV20EX
+- [ ] FM-77AV40EX
+- [ ] FM-77AV40SX
 
 ## Prerequisites
 
@@ -18,8 +31,6 @@ Install the `libfm7` CLI globally:
 ```bash
 npm install -g libfm7
 ```
-
-*(Alternatively, you can run commands directly without installing using `npx libfm7 init` and `npx libfm7 make`).*
 
 ## Usage
 
@@ -56,9 +67,10 @@ libfm7 make clean
 
 ### 3. Run in Emulator
 
-1. Open your FM-7 emulator (e.g., XM7) and insert `build/out.d77` into Drive 0.
-2. In F-BASIC, load and run the program:
+1. Open your FM-7 emulator (e.g., XM7).
+2. Insert an F-BASIC system disk into **Drive 0**.
+3. Insert your compiled disk (`build/out.d77`) into **Drive 1**.
+4. In F-BASIC, load and run the program:
 ```basic
-LOADM "OUT",,R
+LOADM "1:OUT",,R
 ```
-*(Or load and execute separately with `LOADM "OUT"` followed by `EXEC`.)*
