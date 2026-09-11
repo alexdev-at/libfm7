@@ -25,4 +25,9 @@ typedef struct bios_rcb_t {
 /// @return The request status
 extern unsigned char bios_call(bios_rcb_t* rcb);
 
+/// @brief Calls the BIOS routine to output characters to the screen
+/// @param str The string to output
+/// @param n The length of the string
+void bios_output(char* str, unsigned char n);
+
 #endif
