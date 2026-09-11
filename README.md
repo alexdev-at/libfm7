@@ -21,12 +21,15 @@ libfm7 is a modern C SDK for the Fujitsu FM series microcomputers.
 ## Prerequisites
 
 - [Docker Desktop](https://www.docker.com/)
-- [Node.js](https://nodejs.org/) (includes `npm`)
-- [XM7 Emulator](https://retropc.net/ryu/xm7/xm7.shtml) (or any FM-7 compatible emulator)
+- [Node.js](https://nodejs.org/)
+- Fujitsu FM Emulator (like XM7)
 
 ## Installation
 
 Install the `libfm7` CLI globally:
+
+> [!CAUTION]
+> This is not possible yet but will be how it works. If you currently want the toolchain, you need to clone this repo
 
 ```bash
 npm install -g libfm7
