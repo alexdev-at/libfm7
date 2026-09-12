@@ -96,7 +96,7 @@ typedef struct bios_rcb_t {
 
 /// @brief Low level function that passes a raw request control block to the BIOS
 /// @param rcb The request control block
-/// @return The request status
+/// @return The status code returned by the BIOS call
 extern bios_stat_t bios_call(bios_rcb_t* rcb);
 
 /// @brief Calls the BIOS routine to control the audio cassete motor
