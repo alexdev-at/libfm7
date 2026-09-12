@@ -1,6 +1,6 @@
 #include <bios.h>
 
-void bios_output(char* str, unsigned char n) {
+void bios_output(const char* str, const uint16_t n) {
     bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_OUTPUT;
     rcb.rcbsta = 0;
