@@ -33,6 +33,20 @@ bios_stat_t bios_screen(uint8_t* buffer, uint8_t color_bitmask) {
     return rcb.rcbsta;
 }
 
+bios_stat_t bios_beepon() {
+    bios_rcb_t rcb;
+    rcb.rqno = BIOS_REQ_BEEPON;
+    bios_call(&rcb);
+    return rcb.rcbsta;
+}
+
+bios_stat_t bios_beepof() {
+    bios_rcb_t rcb;
+    rcb.rqno = BIOS_REQ_BEEPOF;
+    bios_call(&rcb);
+    return rcb.rcbsta;
+}
+
 bios_stat_t bios_output(const char* str, uint16_t n) {
     bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_OUTPUT;
