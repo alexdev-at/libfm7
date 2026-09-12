@@ -8,6 +8,7 @@ typedef enum bios_req_t {
     BIOS_REQ_MOTOR = 1,
     BIOS_REQ_CTBWRT = 2,
     BIOS_REQ_CTBRED = 3,
+    BIOS_REQ_SCREEN = 5,
     BIOS_REQ_OUTPUT = 20
 } bios_req_t;
 
@@ -98,6 +99,14 @@ typedef struct bios_rcb_t {
             uint8_t crwdat;
         } cassette;
 
+        /// @brief Screen hardcopy to parallel printer request control block layout
+        struct screen {
+            /// @brief Pointer to 209 byte workspace buffer
+            uint8_t* buffer;
+            /// @brief Color filter bitmask
+            uint8_t rcbcdt;
+        } screen;
+
     } data;
 
 } bios_rcb_t;
@@ -118,9 +127,15 @@ bios_stat_t bios_motor(bool on);
 bios_stat_t bios_ctbwrt(uint8_t data);
 
 /// @brief Calls the BIOS routine to read a byte of data from the cassette tape
-/// @param data The byte to read
+/// @param data Pointer to the variable where the read byte will be stored
 /// @return The status code returned by the BIOS call
 bios_stat_t bios_ctbred(uint8_t* data);
+
+/// @brief Calls the BIOS routine to send a 1:1 copy of the screen to the parallel printer
+/// @param data Pointer to the start of the workspace buffer
+/// @param color_bitmask Color bitmask to filter which colors are sent
+/// @return The status code returned by the BIOS call
+bios_stat_t bios_screen(uint8_t* buffer, uint8_t color_bitmask);
 
 /// @brief Calls the BIOS routine to output characters to the screen
 /// @param str The string to output

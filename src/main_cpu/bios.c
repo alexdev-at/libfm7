@@ -24,6 +24,15 @@ bios_stat_t bios_ctbred(uint8_t* data) {
     return rcb.rcbsta;
 }
 
+bios_stat_t bios_screen(uint8_t* buffer, uint8_t color_bitmask) {
+    bios_rcb_t rcb;
+    rcb.rqno = BIOS_REQ_SCREEN;
+    rcb.data.screen.buffer = buffer;
+    rcb.data.screen.rcbcdt = color_bitmask;
+    bios_call(&rcb);
+    return rcb.rcbsta;
+}
+
 bios_stat_t bios_output(const char* str, uint16_t n) {
     bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_OUTPUT;
