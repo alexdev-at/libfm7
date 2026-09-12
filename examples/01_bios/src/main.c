@@ -7,9 +7,9 @@ int main(void) {
     char str[] = "ABC";
     rcb.rqno = BIOS_REQ_OUTPUT;
     rcb.rcbsta = 0;
-    rcb.rcbdba = str;
-    rcb.rcblnh = 3;
-    rcb.rcbbmh = 0;
+    rcb.data.generic.rcbdba = str;
+    rcb.data.generic.rcblnh = 3;
+    rcb.data.generic.rcbbmh = 0;
     bios_call(&rcb);
 
     // Alternatively (and less error prone) using the high level wrapper
