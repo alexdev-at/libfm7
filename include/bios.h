@@ -6,6 +6,8 @@
 /// @brief BIOS request type
 typedef enum bios_req_t {
     BIOS_REQ_MOTOR = 1,
+    BIOS_REQ_CTBWRT = 2,
+    BIOS_REQ_CTBRED = 3,
     BIOS_REQ_OUTPUT = 20
 } bios_req_t;
 
@@ -84,11 +86,17 @@ typedef struct bios_rcb_t {
             uint16_t rcbbmh;
         } generic;
 
-        /// @brief Motor control request control block layout
+        /// @brief Cassette motor control request control block layout
         struct motor {
             /// @brief The motor flag
             bios_motor_flag_t motorf;
         } motor;
+
+        /// @brief Cassette read / write data request control block layout
+        struct cassette {
+            /// @brief The read / write data
+            uint8_t crwdat;
+        } cassette;
 
     } data;
 
@@ -103,6 +111,16 @@ extern bios_stat_t bios_call(bios_rcb_t* rcb);
 /// @param on Whether the motor should be on or not
 /// @return The status code returned by the BIOS call
 bios_stat_t bios_motor(bool on);
+
+/// @brief Calls the BIOS routine to write a byte of data to the cassette tape
+/// @param data The byte to write
+/// @return The status code returned by the BIOS call
+bios_stat_t bios_ctbwrt(uint8_t data);
+
+/// @brief Calls the BIOS routine to read a byte of data from the cassette tape
+/// @param data The byte to read
+/// @return The status code returned by the BIOS call
+bios_stat_t bios_ctbred(uint8_t* data);
 
 /// @brief Calls the BIOS routine to output characters to the screen
 /// @param str The string to output
