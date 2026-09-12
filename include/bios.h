@@ -100,12 +100,14 @@ typedef struct bios_rcb_t {
 extern bios_stat_t bios_call(bios_rcb_t* rcb);
 
 /// @brief Calls the BIOS routine to control the audio cassete motor
-/// @param on 
+/// @param on Whether the motor should be on or not
+/// @return The status code returned by the BIOS call
 bios_stat_t bios_motor(bool on);
 
 /// @brief Calls the BIOS routine to output characters to the screen
 /// @param str The string to output
 /// @param n The length of the string
+/// @return The status code returned by the BIOS call
 bios_stat_t bios_output(const char* str, uint16_t n);
 
 #endif
