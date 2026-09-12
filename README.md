@@ -2,8 +2,8 @@
 
 libfm7 is a modern C SDK for the Fujitsu FM series microcomputers.
 
-> [!WARNING]
-> The SDK is in its earliest stages and most of the library is incomplete. Please be patient and check regularly for updates
+> [!CAUTION]
+> The SDK is in its earliest stages and currently NOT really usable. Please visit regularly to check for updates.
 
 ## Hardware Compatibility
 
