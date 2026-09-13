@@ -140,9 +140,11 @@ bios_stat_t bios_ctbred(uint8_t* data);
 bios_stat_t bios_screen(uint8_t* buffer, uint8_t color_bitmask);
 
 /// @brief Calls the BIOS routine to turn on the internal buzzer
+/// @return The status code returned by the BIOS call
 bios_stat_t bios_beepon();
 
 /// @brief Calls the BIOS routine to turn off the internal buzzer
+/// @return The status code returned by the BIOS call
 bios_stat_t bios_beepof();
 
 /// @brief Calls the BIOS routine to output characters to the screen
