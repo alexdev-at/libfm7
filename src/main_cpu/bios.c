@@ -1,6 +1,6 @@
 #include <bios.h>
 
-bios_stat_t bios_motor(bool on) {
+uint8_t bios_motor(bool on) {
     bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_MOTOR;
     rcb.data.motor.motorf = on ? BIOS_MOTOR_ON : BIOS_MOTOR_OFF;
@@ -8,7 +8,7 @@ bios_stat_t bios_motor(bool on) {
     return rcb.rcbsta;
 }
 
-bios_stat_t bios_ctbwrt(uint8_t data) {
+uint8_t bios_ctbwrt(uint8_t data) {
     bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_CTBWRT;
     rcb.data.cassette.crwdat = data;
@@ -16,7 +16,7 @@ bios_stat_t bios_ctbwrt(uint8_t data) {
     return rcb.rcbsta;
 }
 
-bios_stat_t bios_ctbred(uint8_t* data) {
+uint8_t bios_ctbred(uint8_t* data) {
     bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_CTBRED;
     bios_call(&rcb);
@@ -24,7 +24,7 @@ bios_stat_t bios_ctbred(uint8_t* data) {
     return rcb.rcbsta;
 }
 
-bios_stat_t bios_screen(void* buffer, uint8_t color_bitmask) {
+uint8_t bios_screen(void* buffer, uint8_t color_bitmask) {
     bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_SCREEN;
     rcb.data.screen.buffer = buffer;
@@ -33,7 +33,7 @@ bios_stat_t bios_screen(void* buffer, uint8_t color_bitmask) {
     return rcb.rcbsta;
 }
 
-bios_stat_t bios_restor(uint8_t drive) {
+uint8_t bios_restor(uint8_t drive) {
     bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_RESTOR;
     rcb.data.disk.rcbunt = drive;
@@ -41,7 +41,7 @@ bios_stat_t bios_restor(uint8_t drive) {
     return rcb.rcbsta;
 }
 
-bios_stat_t bios_dwrite(const void* buffer, uint8_t drive, bios_disk_side_t disk_side, uint8_t track, uint8_t sector) {
+uint8_t bios_dwrite(const void* buffer, uint8_t drive, uint8_t disk_side, uint8_t track, uint8_t sector) {
     bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_DWRITE;
     rcb.data.disk.buffer = buffer;
@@ -53,7 +53,7 @@ bios_stat_t bios_dwrite(const void* buffer, uint8_t drive, bios_disk_side_t disk
     return rcb.rcbsta;
 }
 
-bios_stat_t bios_dread(void* buffer, uint8_t drive, bios_disk_side_t disk_side, uint8_t track, uint8_t sector) {
+uint8_t bios_dread(void* buffer, uint8_t drive, uint8_t disk_side, uint8_t track, uint8_t sector) {
     bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_DREAD;
     rcb.data.disk.buffer = buffer;
@@ -65,21 +65,21 @@ bios_stat_t bios_dread(void* buffer, uint8_t drive, bios_disk_side_t disk_side, 
     return rcb.rcbsta;
 }
 
-bios_stat_t bios_beepon() {
+uint8_t bios_beepon(void) {
     bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_BEEPON;
     bios_call(&rcb);
     return rcb.rcbsta;
 }
 
-bios_stat_t bios_beepof() {
+uint8_t bios_beepof(void) {
     bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_BEEPOF;
     bios_call(&rcb);
     return rcb.rcbsta;
 }
 
-bios_stat_t bios_output(const char* str, uint16_t n) {
+uint8_t bios_output(const char* str, uint16_t n) {
     bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_OUTPUT;
     rcb.data.generic.rcbdba = str;
@@ -88,8 +88,8 @@ bios_stat_t bios_output(const char* str, uint16_t n) {
     return rcb.rcbsta;
 }
 
-bios_stat_t bios_biinit() {
-     bios_rcb_t rcb;
+uint8_t bios_biinit(void) {
+    bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_BIINIT;
     bios_call(&rcb);
     return rcb.rcbsta;
