@@ -10,10 +10,18 @@ int main(void) {
     rcb.data.generic.rcbdba = str;
     rcb.data.generic.rcblnh = 3;
     rcb.data.generic.rcbbmh = 0;
-    bios_call(&rcb);
+    uint8_t ll_status = bios_call(&rcb);
+
+    if (ll_status == BIOS_STAT_OK) {
+        // do something
+    }
 
     // Alternatively (and less error prone) using the high level wrapper
-    bios_output("ABC", 3);
+    uint8_t hl_status = bios_output("ABC", 3);
+
+    if (ll_status == BIOS_STAT_ERR_SUB_CMD) {
+        // do some error handling
+    }
 
     return 0;
 }
