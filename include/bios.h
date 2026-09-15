@@ -9,6 +9,9 @@ typedef enum bios_req_t {
     BIOS_REQ_CTBWRT = 2,
     BIOS_REQ_CTBRED = 3,
     BIOS_REQ_SCREEN = 5,
+    BIOS_REQ_RESTOR = 8,
+    BIOS_REQ_DWRITE = 9,
+    BIOS_REQ_DREAD = 10,
     BIOS_REQ_BEEPON = 12,
     BIOS_REQ_BEEPOF = 13,
     BIOS_REQ_OUTPUT = 20
@@ -70,6 +73,12 @@ typedef enum bios_motor_flag_t {
     BIOS_MOTOR_OFF = 0x00
 } bios_motor_flag_t;
 
+/// @brief BIOS disk side
+typedef enum bios_disk_side_t {
+    BIOS_DISK_FRONT,
+    BIOS_DISK_BACK
+} bios_disk_side_t;
+
 /// @brief BIOS request control block
 typedef struct bios_rcb_t {
     /// @brief Request number
@@ -103,11 +112,25 @@ typedef struct bios_rcb_t {
 
         /// @brief Screen hardcopy to parallel printer request control block layout
         struct screen {
-            /// @brief Pointer to 209 byte workspace buffer
-            uint8_t* buffer;
+            /// @brief Pointer to the 209 byte workspace buffer
+            void* buffer;
             /// @brief Color filter bitmask
             uint8_t rcbcdt;
         } screen;
+
+        /// @brief Disk control request control block layout
+        struct disk {
+            /// @brief Pointer to the 256 byte source / destination buffer
+            void* buffer;
+            /// @brief Track number
+            uint8_t rcbtrk;
+            /// @brief Sector number
+            uint8_t rcbsct;
+            /// @brief Disk side
+            bios_disk_side_t rcbsid;
+            /// @brief Drive number
+            uint8_t rcbunt;
+        } disk;
 
     } data;
 
@@ -134,10 +157,33 @@ bios_stat_t bios_ctbwrt(uint8_t data);
 bios_stat_t bios_ctbred(uint8_t* data);
 
 /// @brief Calls the BIOS routine to send a 1:1 copy of the screen to the parallel printer
-/// @param data Pointer to the start of the workspace buffer
+/// @param buffer Pointer to the start of the workspace buffer
 /// @param color_bitmask Color bitmask to filter which colors are sent
 /// @return The status code returned by the BIOS call
-bios_stat_t bios_screen(uint8_t* buffer, uint8_t color_bitmask);
+bios_stat_t bios_screen(void* buffer, uint8_t color_bitmask);
+
+/// @brief Calls the BIOS routine to turn on the internal buzzer
+/// @param drive The drive number
+/// @return The status code returned by the BIOS call
+bios_stat_t bios_restor(uint8_t drive);
+
+/// @brief Calls the BIOS routine to write a sector to a floppy disk
+/// @param buffer Pointer to the start of the source buffer
+/// @param drive The drive number
+/// @param disk_side The disk side
+/// @param track The track number
+/// @param sector The sector number
+/// @return The status code returned by the BIOS call
+bios_stat_t bios_dwrite(const void* buffer, uint8_t drive, bios_disk_side_t disk_side, uint8_t track, uint8_t sector);
+
+/// @brief Calls the BIOS routine to write a sector to a floppy disk
+/// @param buffer Pointer to the start of the destination buffer
+/// @param drive The drive number
+/// @param disk_side The disk side
+/// @param track The track number
+/// @param sector The sector number
+/// @return The status code returned by the BIOS call
+bios_stat_t bios_dread(void* buffer, uint8_t drive, bios_disk_side_t disk_side, uint8_t track, uint8_t sector);
 
 /// @brief Calls the BIOS routine to turn on the internal buzzer
 /// @return The status code returned by the BIOS call

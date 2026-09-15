@@ -24,11 +24,43 @@ bios_stat_t bios_ctbred(uint8_t* data) {
     return rcb.rcbsta;
 }
 
-bios_stat_t bios_screen(uint8_t* buffer, uint8_t color_bitmask) {
+bios_stat_t bios_screen(void* buffer, uint8_t color_bitmask) {
     bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_SCREEN;
     rcb.data.screen.buffer = buffer;
     rcb.data.screen.rcbcdt = color_bitmask;
+    bios_call(&rcb);
+    return rcb.rcbsta;
+}
+
+bios_stat_t bios_restor(uint8_t drive) {
+    bios_rcb_t rcb;
+    rcb.rqno = BIOS_REQ_RESTOR;
+    rcb.data.disk.rcbunt = drive;
+    bios_call(&rcb);
+    return rcb.rcbsta;
+}
+
+bios_stat_t bios_dwrite(const void* buffer, uint8_t drive, bios_disk_side_t disk_side, uint8_t track, uint8_t sector) {
+    bios_rcb_t rcb;
+    rcb.rqno = BIOS_REQ_DWRITE;
+    rcb.data.disk.buffer = buffer;
+    rcb.data.disk.rcbtrk = track;
+    rcb.data.disk.rcbsct = sector;
+    rcb.data.disk.rcbsid = disk_side;
+    rcb.data.disk.rcbunt = drive;
+    bios_call(&rcb);
+    return rcb.rcbsta;
+}
+
+bios_stat_t bios_dread(void* buffer, uint8_t drive, bios_disk_side_t disk_side, uint8_t track, uint8_t sector) {
+    bios_rcb_t rcb;
+    rcb.rqno = BIOS_REQ_DREAD;
+    rcb.data.disk.buffer = buffer;
+    rcb.data.disk.rcbtrk = track;
+    rcb.data.disk.rcbsct = sector;
+    rcb.data.disk.rcbsid = disk_side;
+    rcb.data.disk.rcbunt = drive;
     bios_call(&rcb);
     return rcb.rcbsta;
 }
