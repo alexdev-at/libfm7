@@ -14,7 +14,8 @@ typedef enum bios_req_t {
     BIOS_REQ_DREAD = 10,
     BIOS_REQ_BEEPON = 12,
     BIOS_REQ_BEEPOF = 13,
-    BIOS_REQ_OUTPUT = 20
+    BIOS_REQ_OUTPUT = 20,
+    BIOS_REQ_BIINIT = 24
 } bios_req_t;
 
 /// @brief BIOS return status codes (RCBSTA)
@@ -198,5 +199,9 @@ bios_stat_t bios_beepof();
 /// @param n The length of the string
 /// @return The status code returned by the BIOS call
 bios_stat_t bios_output(const char* str, uint16_t n);
+
+/// @brief Calls the BIOS routine to reinitialize the BIOS to its initial state without needing to perform a full restart
+/// @return The status code returned by the BIOS call
+bios_stat_t bios_biinit();
 
 #endif

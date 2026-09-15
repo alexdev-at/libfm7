@@ -87,3 +87,10 @@ bios_stat_t bios_output(const char* str, uint16_t n) {
     bios_call(&rcb);
     return rcb.rcbsta;
 }
+
+bios_stat_t bios_biinit() {
+     bios_rcb_t rcb;
+    rcb.rqno = BIOS_REQ_BIINIT;
+    bios_call(&rcb);
+    return rcb.rcbsta;
+}
