@@ -29,49 +29,49 @@
 /// @brief Success
 #define BIOS_STAT_OK 0
 /// @brief Request control block parameter error
-#define BIOS_ERR_RCB 1
+#define BIOS_STAT_ERR_RCB 1
 /// @brief Device unavailable or uninstalled optional hardware
-#define BIOS_ERR_DEV_UNAVAIL 2
+#define BIOS_STAT_ERR_DEV_UNAVAIL 2
 /// @brief Floppy drive not ready
-#define BIOS_ERR_FDC_NOT_READY 10
+#define BIOS_STAT_ERR_FDC_NOT_READY 10
 /// @brief Floppy write protected
-#define BIOS_ERR_FDC_WRITE_PROT 11
+#define BIOS_STAT_ERR_FDC_WRITE_PROT 11
 /// @brief Record not found / seek error
-#define BIOS_ERR_FDC_RECORD_NF 12
+#define BIOS_STAT_ERR_FDC_RECORD_NF 12
 /// @brief Data CRC check error
-#define BIOS_ERR_FDC_CRC 13
+#define BIOS_STAT_ERR_FDC_CRC 13
 /// @brief Deleted data mark detected
-#define BIOS_ERR_FDC_DELETED_REC 14
+#define BIOS_STAT_ERR_FDC_DELETED_REC 14
 /// @brief Floppy operation timeout error
-#define BIOS_ERR_FDC_TIMEOUT 15
+#define BIOS_STAT_ERR_FDC_TIMEOUT 15
 /// @brief Printer out of paper
-#define BIOS_ERR_LP_PAPER_EMPTY 50
+#define BIOS_STAT_ERR_LP_PAPER_EMPTY 50
 /// @brief Printer offline or not ready
-#define BIOS_ERR_LP_NOT_READY 51
+#define BIOS_STAT_ERR_LP_NOT_READY 51
 /// @brief Cassette tape read or framing error
-#define BIOS_ERR_CAS_READ 52
+#define BIOS_STAT_ERR_CAS_READ 52
 /// @brief Sub-System init parameter error
-#define BIOS_ERR_SUB_INIT 60
+#define BIOS_STAT_ERR_SUB_INIT 60
 /// @brief Sub-System console coordinate error
-#define BIOS_ERR_SUB_CONSOLE_CRD 61
+#define BIOS_STAT_ERR_SUB_CONSOLE_CRD 61
 /// @brief Sub-System multi-byte order sequence parameter missing error
-#define BIOS_ERR_SUB_SEQ_DATA 62
+#define BIOS_STAT_ERR_SUB_SEQ_DATA 62
 /// @brief Sub-System graphic coordinate error
-#define BIOS_ERR_SUB_GRAPHIC_CRD 63
+#define BIOS_STAT_ERR_SUB_GRAPHIC_CRD 63
 /// @brief Sub-System unusable or undefined function code
-#define BIOS_ERR_SUB_FUNC_CODE 64
+#define BIOS_STAT_ERR_SUB_FUNC_CODE 64
 /// @brief Sub-System coordinate count out of range
-#define BIOS_ERR_SUB_CRD_COUNT 65
+#define BIOS_STAT_ERR_SUB_CRD_COUNT 65
 /// @brief Sub-System character count out of range
-#define BIOS_ERR_SUB_CHAR_COUNT 66
+#define BIOS_STAT_ERR_SUB_CHAR_COUNT 66
 /// @brief Sub-System color count out of range
-#define BIOS_ERR_SUB_COLOR_COUNT 67
+#define BIOS_STAT_ERR_SUB_COLOR_COUNT 67
 /// @brief Sub-System function key number error
-#define BIOS_ERR_SUB_PFKEY_NUM 68
+#define BIOS_STAT_ERR_SUB_PFKEY_NUM 68
 /// @brief Sub-System general parameter error
-#define BIOS_ERR_SUB_PARAM 69
+#define BIOS_STAT_ERR_SUB_PARAM 69
 /// @brief Sub-System command error
-#define BIOS_ERR_SUB_CMD 70
+#define BIOS_STAT_ERR_SUB_CMD 70
 
 /// @brief BIOS request control block
 typedef struct bios_rcb_t {
