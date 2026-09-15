@@ -28,11 +28,8 @@ libfm7 is a modern C SDK for the Fujitsu FM series microcomputers.
 
 Install the `libfm7` CLI globally:
 
-> [!CAUTION]
-> This is not possible yet but will be how it works. If you currently want the toolchain, you need to clone this repo
-
 ```bash
-npm install -g libfm7
+npm install -g alexdev-at/libfm7
 ```
 
 ## Usage
