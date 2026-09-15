@@ -75,8 +75,8 @@ typedef enum bios_motor_flag_t {
 
 /// @brief BIOS disk side
 typedef enum bios_disk_side_t {
-    BIOS_DISK_FRONT,
-    BIOS_DISK_BACK
+    BIOS_DISK_FRONT = 0,
+    BIOS_DISK_BACK = 1
 } bios_disk_side_t;
 
 /// @brief BIOS request control block
@@ -94,7 +94,7 @@ typedef struct bios_rcb_t {
             void* rcbdba;
             /// @brief Data buffer length
             uint16_t rcblnh;
-            /// @brief TODO
+            /// @brief Buffer maximum length
             uint16_t rcbbmh;
         } generic;
 
