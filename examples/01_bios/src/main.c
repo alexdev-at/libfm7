@@ -19,7 +19,7 @@ int main(void) {
     // Alternatively (and less error prone) using the high level wrapper
     uint8_t hl_status = bios_output("ABC", 3);
 
-    if (ll_status == BIOS_STAT_ERR_SUB_CMD) {
+    if (hl_status == BIOS_STAT_ERR_SUB_CMD) {
         // do some error handling
     }
 
