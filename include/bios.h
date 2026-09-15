@@ -24,6 +24,7 @@
 #define BIOS_REQ_BEEPON 12
 #define BIOS_REQ_BEEPOF 13
 #define BIOS_REQ_OUTPUT 20
+#define BIOS_REQ_KANJIR 22
 #define BIOS_REQ_BIINIT 24
 
 /// @brief Success
@@ -82,7 +83,7 @@ typedef struct bios_rcb_t {
     
     union data {
 
-        /// @brief Generic request control block layout that works for all commands
+        /// @brief Generic control block layout that works for all commands
         struct generic {
             /// @brief Data buffer
             void* rcbdba;
@@ -92,13 +93,13 @@ typedef struct bios_rcb_t {
             uint16_t rcbbmh;
         } generic;
 
-        /// @brief Cassette motor control request control block layout
+        /// @brief Cassette motor control control block layout
         struct motor {
             /// @brief The motor flag
             uint8_t motorf;
         } motor;
 
-        /// @brief Cassette read / write data request control block layout
+        /// @brief Cassette read / write data control block layout
         struct cassette {
             /// @brief The read / write data
             uint8_t crwdat;
@@ -112,7 +113,7 @@ typedef struct bios_rcb_t {
             uint8_t rcbcdt;
         } screen;
 
-        /// @brief Disk control request control block layout
+        /// @brief Disk read / write control request control block layout
         struct disk {
             /// @brief Pointer to the 256 byte source / destination buffer
             void* buffer;
@@ -125,6 +126,14 @@ typedef struct bios_rcb_t {
             /// @brief Drive number
             uint8_t rcbunt;
         } disk;
+
+        /// @brief Kanji ROM read data control block layout
+        struct kanji {
+            /// @brief Pointer to the 32 byte destination buffer
+            void* buffer;
+            /// @brief 16 bit JIS kanji code
+            uint16_t rcbjcd;
+        } kanji;
 
     } data;
 
@@ -192,6 +201,12 @@ uint8_t bios_beepof(void);
 /// @param n The length of the string
 /// @return The status code returned by the BIOS call
 uint8_t bios_output(const char* str, uint16_t n);
+
+/// @brief Calls the BIOS routine to read a 16x16 dot maxtrix font pattern from the kanji ROM
+/// @param buffer Pointer to the start of the destination buffer
+/// @param color_bitmask JIS kanji code
+/// @return The status code returned by the BIOS call
+uint8_t bios_screen(void* buffer, uint16_t jis_code);
 
 /// @brief Calls the BIOS routine to reinitialize the BIOS to its initial state without needing to perform a full restart
 /// @return The status code returned by the BIOS call
