@@ -206,7 +206,7 @@ uint8_t bios_output(const char* str, uint16_t n);
 /// @param buffer Pointer to the start of the destination buffer
 /// @param color_bitmask JIS kanji code
 /// @return The status code returned by the BIOS call
-uint8_t bios_screen(void* buffer, uint16_t jis_code);
+uint8_t bios_kanjir(void* buffer, uint16_t jis_code);
 
 /// @brief Calls the BIOS routine to reinitialize the BIOS to its initial state without needing to perform a full restart
 /// @return The status code returned by the BIOS call
