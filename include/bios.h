@@ -23,8 +23,10 @@
 #define BIOS_REQ_DREAD 10
 #define BIOS_REQ_BEEPON 12
 #define BIOS_REQ_BEEPOF 13
+#define BIOS_REQ_LPOUT 14
 #define BIOS_REQ_OUTPUT 20
 #define BIOS_REQ_KANJIR 22
+#define BIOS_REQ_LPCHK 23
 #define BIOS_REQ_BIINIT 24
 
 /// @brief Success
@@ -196,17 +198,26 @@ uint8_t bios_beepon(void);
 /// @return The status code returned by the BIOS call
 uint8_t bios_beepof(void);
 
+/// @brief Calls the BIOS routine to send a buffer to the parallel printer
+/// @return The status code returned by the BIOS call
+uint8_t bios_lpout(const void* buffer, uint16_t length);
+
 /// @brief Calls the BIOS routine to output characters to the screen
 /// @param str The string to output
 /// @param n The length of the string
 /// @return The status code returned by the BIOS call
-uint8_t bios_output(const char* str, uint16_t n);
+uint8_t bios_output(const void* buffer, uint16_t length);
 
 /// @brief Calls the BIOS routine to read a 16x16 dot maxtrix font pattern from the kanji ROM
 /// @param buffer Pointer to the start of the destination buffer
 /// @param color_bitmask JIS kanji code
 /// @return The status code returned by the BIOS call
 uint8_t bios_kanjir(void* buffer, uint16_t jis_code);
+
+/// @brief Calls the BIOS routine to check the parallel printer status
+/// @return The status code returned by the BIOS call
+uint8_t bios_lpchk(void);
+
 
 /// @brief Calls the BIOS routine to reinitialize the BIOS to its initial state without needing to perform a full restart
 /// @return The status code returned by the BIOS call

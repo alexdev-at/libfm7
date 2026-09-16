@@ -79,11 +79,20 @@ uint8_t bios_beepof(void) {
     return rcb.rcbsta;
 }
 
-uint8_t bios_output(const char* str, uint16_t n) {
+uint8_t bios_lpout(const void* buffer, uint16_t length) {
+    bios_rcb_t rcb;
+    rcb.rqno = BIOS_REQ_LPOUT;
+    rcb.data.generic.rcbdba = buffer;
+    rcb.data.generic.rcblnh = length;
+    bios_call(&rcb);
+    return rcb.rcbsta;
+}
+
+uint8_t bios_output(const void* buffer, uint16_t length) {
     bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_OUTPUT;
-    rcb.data.generic.rcbdba = str;
-    rcb.data.generic.rcblnh = n;
+    rcb.data.generic.rcbdba = buffer;
+    rcb.data.generic.rcblnh = length;
     bios_call(&rcb);
     return rcb.rcbsta;
 }
@@ -93,6 +102,13 @@ uint8_t bios_kanjir(void* buffer, uint16_t jis_code) {
     rcb.rqno = BIOS_REQ_KANJIR;
     rcb.data.kanji.buffer = buffer;
     rcb.data.kanji.rcbjcd = jis_code;
+    bios_call(&rcb);
+    return rcb.rcbsta;
+}
+
+uint8_t bios_lpchk(void) {
+    bios_rcb_t rcb;
+    rcb.rqno = BIOS_REQ_LPCHK;
     bios_call(&rcb);
     return rcb.rcbsta;
 }
