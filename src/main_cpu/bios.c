@@ -97,6 +97,15 @@ uint8_t bios_output(const void* buffer, uint16_t length) {
     return rcb.rcbsta;
 }
 
+uint8_t bios_keyin(bios_keyin_t* key_data) {
+    bios_rcb_t rcb;
+    rcb.rqno = BIOS_REQ_KEYIN;
+    rcb.data.generic.rcbdba = key_data;
+    rcb.data.generic.rcblnh = 2;
+    bios_call(&rcb);
+    return rcb.rcbsta;
+}
+
 uint8_t bios_kanjir(void* buffer, uint16_t jis_code) {
     bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_KANJIR;

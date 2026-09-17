@@ -1,4 +1,6 @@
 build/
+lib/
+playground/
 *.o
 *.bin
 *.s19

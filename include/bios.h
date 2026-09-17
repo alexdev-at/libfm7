@@ -25,6 +25,7 @@
 #define BIOS_REQ_BEEPOF 13
 #define BIOS_REQ_LPOUT 14
 #define BIOS_REQ_OUTPUT 20
+#define BIOS_REQ_KEYIN 21
 #define BIOS_REQ_KANJIR 22
 #define BIOS_REQ_LPCHK 23
 #define BIOS_REQ_BIINIT 24
@@ -75,6 +76,17 @@
 #define BIOS_STAT_ERR_SUB_PARAM 69
 /// @brief Sub-System command error
 #define BIOS_STAT_ERR_SUB_CMD 70
+
+#define BIOS_KEYIN_STAT_KEY_PRESSED 1
+#define BIOS_KEYIN_STAT_NO_KEY_PRESSED 0
+
+/// @brief BIOS keyin data
+typedef struct bios_keyin_t {
+    /// @brief Key data
+    uint8_t key;
+    /// @brief Status if a key was pressed
+    uint8_t status;
+} bios_keyin_t;
 
 /// @brief BIOS request control block
 typedef struct bios_rcb_t {
@@ -209,6 +221,11 @@ uint8_t bios_lpout(const void* buffer, uint16_t length);
 uint8_t bios_output(const void* buffer, uint16_t length);
 
 /// @brief Calls the BIOS routine to read a 16x16 dot maxtrix font pattern from the kanji ROM
+/// @param key_data Pointer to the structure where the key data will be stored
+/// @return The status code returned by the BIOS call
+uint8_t bios_keyin(bios_keyin_t* key_data);
+
+/// @brief Calls the BIOS routine to read a 16x16 dot maxtrix font pattern from the kanji ROM
 /// @param buffer Pointer to the start of the destination buffer
 /// @param color_bitmask JIS kanji code
 /// @return The status code returned by the BIOS call
@@ -217,7 +234,6 @@ uint8_t bios_kanjir(void* buffer, uint16_t jis_code);
 /// @brief Calls the BIOS routine to check the parallel printer status
 /// @return The status code returned by the BIOS call
 uint8_t bios_lpchk(void);
-
 
 /// @brief Calls the BIOS routine to reinitialize the BIOS to its initial state without needing to perform a full restart
 /// @return The status code returned by the BIOS call
