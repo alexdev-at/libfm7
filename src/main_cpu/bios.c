@@ -24,11 +24,11 @@ uint8_t bios_ctbred(uint8_t* data) {
     return rcb.rcbsta;
 }
 
-uint8_t bios_screen(void* buffer, uint8_t color_bitmask) {
+uint8_t bios_screen(void* buffer, uint8_t black_bitmask) {
     bios_rcb_t rcb;
     rcb.rqno = BIOS_REQ_SCREEN;
     rcb.data.screen.buffer = buffer;
-    rcb.data.screen.rcbcdt = color_bitmask;
+    rcb.data.screen.rcbcdt = black_bitmask;
     bios_call(&rcb);
     return rcb.rcbsta;
 }
@@ -84,6 +84,16 @@ uint8_t bios_lpout(const void* buffer, uint16_t length) {
     rcb.rqno = BIOS_REQ_LPOUT;
     rcb.data.generic.rcbdba = buffer;
     rcb.data.generic.rcblnh = length;
+    bios_call(&rcb);
+    return rcb.rcbsta;
+}
+
+uint8_t bios_hdcopy(void* buffer, uint8_t black_bitmask, uint8_t grey_bitmask) {
+    bios_rcb_t rcb;
+    rcb.rqno = BIOS_REQ_HDCOPY;
+    rcb.data.hdcopy.buffer = buffer;
+    rcb.data.hdcopy.rcbctb = black_bitmask;
+    rcb.data.hdcopy.rcbctg = grey_bitmask;
     bios_call(&rcb);
     return rcb.rcbsta;
 }

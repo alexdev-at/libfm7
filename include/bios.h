@@ -6,6 +6,18 @@
 #define BIOS_MOTOR_ON 0xFF
 #define BIOS_MOTOR_OFF 0x00
 
+#define BIOS_KEYIN_STAT_KEY_PRESSED 1
+#define BIOS_KEYIN_STAT_NO_KEY_PRESSED 0
+
+#define BIOS_COLOR_BLACK 0x00
+#define BIOS_COLOR_BLUE 0x01
+#define BIOS_COLOR_RED 0x02
+#define BIOS_COLOR_MAGENTA 0x03
+#define BIOS_COLOR_GREEN 0x04
+#define BIOS_COLOR_CYAN 0x05
+#define BIOS_COLOR_YELLOW 0x06
+#define BIOS_COLOR_WHITE 0x07
+
 #define BIOS_DISK_FRONT 0
 #define BIOS_DISK_BACK 1
 
@@ -24,6 +36,7 @@
 #define BIOS_REQ_BEEPON 12
 #define BIOS_REQ_BEEPOF 13
 #define BIOS_REQ_LPOUT 14
+#define BIOS_REQ_HDCOPY 15
 #define BIOS_REQ_OUTPUT 20
 #define BIOS_REQ_KEYIN 21
 #define BIOS_REQ_KANJIR 22
@@ -77,9 +90,6 @@
 /// @brief Sub-System command error
 #define BIOS_STAT_ERR_SUB_CMD 70
 
-#define BIOS_KEYIN_STAT_KEY_PRESSED 1
-#define BIOS_KEYIN_STAT_NO_KEY_PRESSED 0
-
 /// @brief BIOS keyin data
 typedef struct bios_keyin_t {
     /// @brief Key data
@@ -119,7 +129,7 @@ typedef struct bios_rcb_t {
             uint8_t crwdat;
         } cassette;
 
-        /// @brief Screen hardcopy to parallel printer request control block layout
+        /// @brief 1:1 screen hardcopy to parallel printer request control block layout
         struct screen {
             /// @brief Pointer to the 209 byte workspace buffer
             void* buffer;
@@ -149,6 +159,16 @@ typedef struct bios_rcb_t {
             uint16_t rcbjcd;
         } kanji;
 
+        /// @brief Dithered screen hardcopy to parallel printer request control block layout
+        struct hdcopy {
+            /// @brief Pointer to the 209 byte workspace buffer
+            void* buffer;
+            /// @brief Black color bitmask
+            uint8_t rcbctb;
+            /// @brief Grey color bitmask
+            uint8_t rcbctg;
+        } hdcopy;
+
     } data;
 
 } bios_rcb_t;
@@ -175,11 +195,11 @@ uint8_t bios_ctbred(uint8_t* data);
 
 /// @brief Calls the BIOS routine to send a 1:1 copy of the screen to the parallel printer
 /// @param buffer Pointer to the start of the workspace buffer
-/// @param color_bitmask Color bitmask to filter which colors are sent
+/// @param black_bitmask Color bitmask to determine which colors are black
 /// @return The status code returned by the BIOS call
-uint8_t bios_screen(void* buffer, uint8_t color_bitmask);
+uint8_t bios_screen(void* buffer, uint8_t black_bitmask);
 
-/// @brief Calls the BIOS routine to turn on the internal buzzer
+/// @brief Calls the BIOS routine to reset the floppy drive head to track 0
 /// @param drive The drive number
 /// @return The status code returned by the BIOS call
 uint8_t bios_restor(uint8_t drive);
@@ -211,12 +231,21 @@ uint8_t bios_beepon(void);
 uint8_t bios_beepof(void);
 
 /// @brief Calls the BIOS routine to send a buffer to the parallel printer
+/// @param buffer Pointer to the start of the buffer
+/// @param length Length of the buffer
 /// @return The status code returned by the BIOS call
 uint8_t bios_lpout(const void* buffer, uint16_t length);
 
+/// @brief Calls the BIOS routine to send a 3 level greyscale dithered copy of the screen to the parallel printer
+/// @param buffer Pointer to the start of the workspace buffer
+/// @param black_bitmask Color bitmask to determine which colors are black
+/// @param grey_bitmask Color bitmask to determine which colors are grey (dithered)
+/// @return The status code returned by the BIOS call
+uint8_t bios_hdcopy(void* buffer, uint8_t black_bitmask, uint8_t grey_bitmask);
+
 /// @brief Calls the BIOS routine to output characters to the screen
-/// @param str The string to output
-/// @param n The length of the string
+/// @param buffer The pointer to the start of the buffer
+/// @param length The length of the buffer
 /// @return The status code returned by the BIOS call
 uint8_t bios_output(const void* buffer, uint16_t length);
 
@@ -227,7 +256,7 @@ uint8_t bios_keyin(bios_keyin_t* key_data);
 
 /// @brief Calls the BIOS routine to read a 16x16 dot maxtrix font pattern from the kanji ROM
 /// @param buffer Pointer to the start of the destination buffer
-/// @param color_bitmask JIS kanji code
+/// @param jis_code JIS kanji code
 /// @return The status code returned by the BIOS call
 uint8_t bios_kanjir(void* buffer, uint16_t jis_code);
 
